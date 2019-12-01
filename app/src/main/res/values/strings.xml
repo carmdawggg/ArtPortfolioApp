@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">Art Portfolio</string>
+    <string name="menuitem_edit">Edit</string>
+    <string name="menuitem_delete">Delete</string>
+    <string name="hint_title_required">Title (required)</string>
+    <string name="hint_date_created">Creation Date</string>
+    <string name="hint_medium">Medium</string>
+    <string name="hint_dimensions">Dimensions</string>
+    <string name="hint_image">Image</string>
+    <string name="label_title">Title: </string>
+    <string name="label_date_created">Creation Date: </string>
+    <string name="label_medium">Medium: </string>
+    <string name="label_dimensions">Dimensions: </string>
+    <string name="label_image">Image: </string>
+    <string name="confirm_title">Are you sure?</string>
+    <string name="confirm_message">This will permanently delete the artwork.</string>
+    <string name="button_cancel">Cancel</string>
+    <string name="button_delete">Delete</string>
+    <string name="artwork_added">Artwork added successfully.</string>
+    <string name="artwork_not_added">Artwork add failed.</string>
+    <string name="artwork_updated">Artwork updated.</string>
+    <string name="artwork_not_updated">Artwork not updated.</string>
+    <string name="invalid_query_uri">Invalid query URI: </string>
+    <string name="invalid_insert_uri">Invalid insert URI: </string>
+    <string name="invalid_update_uri">Invalid update URI: </string>
+    <string name="invalid_delete_uri">Invalid delete URI: </string>
+    <string name="insert_failed">Insert failed: </string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
