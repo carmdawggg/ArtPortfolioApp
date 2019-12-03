@@ -11,7 +11,7 @@ import android.os.Bundle;
 public class MainActivity extends AppCompatActivity implements ArtworkFragment.ContactsFragmentListener, DetailFragment.DetailFragmentListener,
         AddEditFragment.AddEditFragmentListener {
 
-    public static final String CONTACT_URI = "contact_uri";
+    public static final String ARTWORK_URI = "artwork_uri";
     private ArtworkFragment artworkFragment;
 
     @Override
@@ -29,25 +29,25 @@ public class MainActivity extends AppCompatActivity implements ArtworkFragment.C
     }
 
     @Override
-    public void onContactSelected(Uri contactUri){
+    public void onArtworkSelected(Uri artworkUri){
         if(findViewById(R.id.fragmentContainer) != null){
-            displayContact(contactUri, R.id.fragmentContainer);
+            displayArtwork(artworkUri, R.id.fragmentContainer);
         }
 
     }
 
     @Override
-    public void onAddContact(){
+    public void onAddArtwork(){
         if(findViewById(R.id.fragmentContainer)!=null){
             displayAddEditFragment(R.id.fragmentContainer,  null);
         }
     }
 
-    private void displayContact(Uri contactUri, int viewId){
+    private void displayArtwork(Uri artworkUri, int viewId){
         DetailFragment detailFragment = new DetailFragment();
 
         Bundle arguments = new Bundle();
-        arguments.putParcelable(CONTACT_URI, contactUri);
+        arguments.putParcelable(ARTWORK_URI, artworkUri);
         detailFragment.setArguments(arguments);
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
@@ -56,12 +56,12 @@ public class MainActivity extends AppCompatActivity implements ArtworkFragment.C
         transaction.commit();
     }
 
-    private void displayAddEditFragment(int viewId, Uri contactUri){
+    private void displayAddEditFragment(int viewId, Uri artworkUri){
         AddEditFragment addEditFragment = new AddEditFragment();
 
-        if(contactUri != null){
+        if(artworkUri != null){
             Bundle arguments = new Bundle();
-            arguments.putParcelable(CONTACT_URI, contactUri);
+            arguments.putParcelable(ARTWORK_URI, artworkUri);
             addEditFragment.setArguments(arguments);
         }
 
@@ -73,22 +73,22 @@ public class MainActivity extends AppCompatActivity implements ArtworkFragment.C
     }
 
     @Override
-    public void onContactDeleted(){
+    public void onArtworkDeleted(){
         getSupportFragmentManager().popBackStack();
-        artworkFragment.updateContactList();
+        artworkFragment.updateArtworkList();
     }
 
     @Override
-    public void onEditContact(Uri contactUri){
+    public void onEditArtwork(Uri artworkUri){
         if(findViewById(R.id.fragmentContainer) != null){
-            displayAddEditFragment(R.id.fragmentContainer, contactUri);
+            displayAddEditFragment(R.id.fragmentContainer, artworkUri);
         }
     }
 
     @Override
-    public void onAddEditCompleted(Uri contactUri){
+    public void onAddEditCompleted(Uri artworkUri){
         getSupportFragmentManager().popBackStack();
-        artworkFragment.updateContactList();
+        artworkFragment.updateArtworkList();
 
     }
 

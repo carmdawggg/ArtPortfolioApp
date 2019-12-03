@@ -16,14 +16,14 @@ public class ArtPortfolioContentProvider extends ContentProvider {
 
     private static final UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
 
-    private static final int ONE_CONTACT = 1;
-    private static final int CONTACTS = 2;
+    private static final int ONE_ARTWORK = 1;
+    private static final int ARTWORKS = 2;
 
     static {
         uriMatcher.addURI(DatabaseDescription.AUTHORITY,
-                DatabaseDescription.Artwork.TABLE_NAME + "/#", ONE_CONTACT);
+                DatabaseDescription.Artwork.TABLE_NAME + "/#", ONE_ARTWORK);
         uriMatcher.addURI(DatabaseDescription.AUTHORITY,
-                DatabaseDescription.Artwork.TABLE_NAME, CONTACTS);
+                DatabaseDescription.Artwork.TABLE_NAME, ARTWORKS);
 
     }
 
@@ -36,7 +36,7 @@ public class ArtPortfolioContentProvider extends ContentProvider {
         int numberOfRowsDeleted;
 
         switch(uriMatcher.match(uri)){
-            case ONE_CONTACT:
+            case ONE_ARTWORK:
                 String id = uri.getLastPathSegment();
 
                 numberOfRowsDeleted = dbHelper.getWritableDatabase().delete(DatabaseDescription.Artwork.TABLE_NAME, DatabaseDescription.Artwork._ID + "=" +id,
@@ -64,14 +64,14 @@ public class ArtPortfolioContentProvider extends ContentProvider {
     @Override
     public Uri insert(Uri uri, ContentValues values) {
         // TODO: Implement this to handle requests to insert a new row.
-        Uri newContactUri = null;
+        Uri newArtworkUri = null;
 
         switch (uriMatcher.match(uri)){
-            case CONTACTS:
+            case ARTWORKS:
                 long rowId = dbHelper.getWritableDatabase().insert(DatabaseDescription.Artwork.TABLE_NAME, null, values);
 
                 if(rowId > 0){
-                    newContactUri = DatabaseDescription.Artwork.buildArtworkUri(rowId);
+                    newArtworkUri = DatabaseDescription.Artwork.buildArtworkUri(rowId);
 
                     getContext().getContentResolver().notifyChange(uri, null);
                 }
@@ -85,7 +85,7 @@ public class ArtPortfolioContentProvider extends ContentProvider {
                     throw new UnsupportedOperationException(getContext().getString(R.string.invalid_insert_uri) + uri);
 
         }
-        return newContactUri;
+        return newArtworkUri;
     }
 
     @Override
@@ -106,10 +106,10 @@ public class ArtPortfolioContentProvider extends ContentProvider {
         queryBuilder.setTables(DatabaseDescription.Artwork.TABLE_NAME);
 
         switch(uriMatcher.match(uri)){
-            case ONE_CONTACT:
+            case ONE_ARTWORK:
                 queryBuilder.appendWhere(DatabaseDescription.Artwork._ID + "=" + uri.getLastPathSegment());
                 break;
-            case  CONTACTS:
+            case  ARTWORKS:
                 break;
                 default:
                     throw new UnsupportedOperationException(getContext().getString(R.string.invalid_query_uri)+ uri);
@@ -128,7 +128,7 @@ public class ArtPortfolioContentProvider extends ContentProvider {
         int numberOfRowsUpdated;
 
         switch(uriMatcher.match(uri)){
-            case ONE_CONTACT:
+            case ONE_ARTWORK:
                 String id = uri.getLastPathSegment();
 
                 numberOfRowsUpdated = dbHelper.getWritableDatabase().update(DatabaseDescription.Artwork.TABLE_NAME, values,

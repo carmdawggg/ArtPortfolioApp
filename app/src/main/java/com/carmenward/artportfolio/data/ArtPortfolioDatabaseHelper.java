@@ -1,6 +1,5 @@
 package com.carmenward.artportfolio.data;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -24,7 +23,7 @@ public class ArtPortfolioDatabaseHelper extends SQLiteOpenHelper {
                         DatabaseDescription.Artwork.COLUMN_DATE_CREATED + " TEXT, " +
                         DatabaseDescription.Artwork.COLUMN_MEDIUM + " TEXT, " +
                         DatabaseDescription.Artwork.COLUMN_DIMENSIONS + " TEXT, " +
-                        DatabaseDescription.Artwork.COLUMN_IMAGE + " BLOB NOT NULL);";
+                        DatabaseDescription.Artwork.COLUMN_IMAGE + " TEXT);";
         db.execSQL(CREATE_ARTWORK_TABLE);
 
     }

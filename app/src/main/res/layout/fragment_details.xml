@@ -14,9 +14,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_columnSpan="2"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"
             app:srcCompat="@android:drawable/alert_dark_frame" />
         <TextView
-            android:id="@+id/nameLabelTextView"
+            android:id="@+id/titleLabelTextView"
             style="@style/ContactLabelTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -25,7 +27,7 @@
             android:text="@string/label_title" />
 
         <TextView
-            android:id="@+id/nameTextView"
+            android:id="@+id/titleTextView"
             style="@style/ContactTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -33,7 +35,7 @@
             android:layout_column="1"/>
 
         <TextView
-            android:id="@+id/phoneLabelTextView"
+            android:id="@+id/dateCreatedLabelTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_row="2"
@@ -42,7 +44,7 @@
             android:text="@string/label_date_created" />
 
         <TextView
-            android:id="@+id/phoneTextView"
+            android:id="@+id/dateCreatedTextView"
             android:layout_row="2"
             android:layout_column="1"
             style="@style/ContactTextView"
@@ -50,7 +52,7 @@
             android:layout_height="wrap_content" />
 
         <TextView
-            android:id="@+id/emailLabelTextView"
+            android:id="@+id/mediumLabelTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_row="3"
@@ -59,7 +61,7 @@
             android:text="@string/label_medium" />
 
         <TextView
-            android:id="@+id/emailTextView"
+            android:id="@+id/mediumTextView"
             android:layout_row="3"
             android:layout_column="1"
             style="@style/ContactTextView"
@@ -67,7 +69,7 @@
             android:layout_height="wrap_content" />
 
         <TextView
-            android:id="@+id/streetLabelTextView"
+            android:id="@+id/dimensionsLabelTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_row="4"
@@ -76,7 +78,7 @@
             android:text="@string/label_dimensions" />
 
         <TextView
-            android:id="@+id/streetTextView"
+            android:id="@+id/dimensionsTextView"
             android:layout_row="4"
             android:layout_column="1"
             style="@style/ContactTextView"

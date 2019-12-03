@@ -2,7 +2,9 @@ package com.carmenward.artportfolio;
 
 import android.annotation.SuppressLint;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,8 +19,8 @@ import com.carmenward.artportfolio.data.DatabaseDescription;
 
 public class ArtworkAdapter extends RecyclerView.Adapter<ArtworkAdapter.ViewHolder> {
 
-    public interface ContactClickListener{
-        void onClick(Uri contactUri);
+    public interface ArtworkClickListener{
+        void onClick(Uri artworkUri);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -51,9 +53,9 @@ public class ArtworkAdapter extends RecyclerView.Adapter<ArtworkAdapter.ViewHold
 
     public static Cursor cursor = null;
 
-    private final ContactClickListener clickListener;
+    private final ArtworkClickListener clickListener;
 
-    public ArtworkAdapter(ContactClickListener clickListener){
+    public ArtworkAdapter(ArtworkClickListener clickListener){
         this.clickListener = clickListener;
     }
 
@@ -67,31 +69,27 @@ public class ArtworkAdapter extends RecyclerView.Adapter<ArtworkAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position){
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
                 try {
                     cursor.moveToPosition(position);
                     holder.setRowID(cursor.getLong(cursor.getColumnIndex(DatabaseDescription.Artwork._ID)));
                     holder.textView.setText(cursor.getString(cursor.getColumnIndex(DatabaseDescription.Artwork.COLUMN_TITLE)));
-                    final byte[] bytes = cursor.getBlob(cursor.getColumnIndex(DatabaseDescription.Artwork.COLUMN_IMAGE));
-                    holder.imageView.post(new Runnable() {
-                        @SuppressLint("LongLogTag")
-                        @Override
-                        public void run() {
-                            holder.imageView.setImageBitmap(ImageUtils.getImage(bytes));
-                            Log.d("Image Loaded From Database", "wassup");
-                        }
 
+                    final String bytesString = cursor.getString(cursor.getColumnIndex(DatabaseDescription.Artwork.COLUMN_IMAGE));
+                    final Bitmap bytes = ImageUtils.convert(bytesString);
+                    holder.imageView.post(new Runnable() {
+                            @SuppressLint("LongLogTag")
+                            @Override
+                            public void run () {
+                                holder.imageView.setImageBitmap(bytes);
+                                Log.d("Image Loaded From Database", "wassup");
+                            }
                     });
                 }
                 catch (Exception e){
                     Log.d("ERROR", e.getLocalizedMessage());
                 }
             }
-        }).start();
 
-    }
 
     @Override
     public int getItemCount(){
