@@ -8,11 +8,6 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class ImageUtils {
-    public static byte[] getImageBytes(Bitmap bitmap) {
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-        return stream.toByteArray();
-    }
 
     public static Bitmap getImage(byte[] image) {
         return BitmapFactory.decodeByteArray(image, 0, image.length);

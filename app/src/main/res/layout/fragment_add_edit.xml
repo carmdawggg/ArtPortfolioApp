@@ -17,10 +17,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="top|center"
+                android:adjustViewBounds="true"
                 app:srcCompat="@drawable/ic_add_a_photo_black_50dp" />
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/nameTextInputLayout"
+                android:id="@+id/titleTextInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
@@ -33,7 +34,7 @@
                     android:inputType="textPersonName|textCapWords" />
             </com.google.android.material.textfield.TextInputLayout>
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/phoneTextInputLayout"
+                android:id="@+id/creationDateTextInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
@@ -46,7 +47,7 @@
                     android:inputType="phone" />
             </com.google.android.material.textfield.TextInputLayout>
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/emailTextInputLayout"
+                android:id="@+id/mediumTextInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
@@ -59,7 +60,7 @@
                     android:inputType="textEmailAddress" />
             </com.google.android.material.textfield.TextInputLayout>
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/streetTextInputLayout"
+                android:id="@+id/dimensionsTextInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 

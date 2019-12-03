@@ -25,19 +25,18 @@ import com.carmenward.artportfolio.data.DatabaseDescription;
 public class DetailFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
     public interface DetailFragmentListener{
-        void onContactDeleted();
-        void onEditContact(Uri contactUri);
+        void onArtworkDeleted();
+        void onEditArtwork(Uri artworkUri);
     }
 
-    private static final int CONTACT_LOADER = 0;
+    private static final int ARTWORK_LOADER = 0;
     public static DetailFragmentListener listener;
-    public static Uri contactUri;
+    public static Uri artworkUri;
 
-    private TextView nameTextView;
-    private TextView phoneTextView;
-    private TextView emailTextView;
-    private TextView streetTextView;
-    private TextView cityTextView;
+    private TextView titleTextView;
+    private TextView creationDateTextView;
+    private TextView mediumTextView;
+    private TextView dimensionsTextView;
     private ImageView imageView;
 
     @Override
@@ -60,18 +59,18 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
         Bundle arguments = getArguments();
 
         if(arguments != null){
-            contactUri = arguments.getParcelable(MainActivity.CONTACT_URI);
+            artworkUri = arguments.getParcelable(MainActivity.ARTWORK_URI);
         }
 
         View view = inflater.inflate(R.layout.fragment_details, container, false);
 
-        nameTextView = (TextView) view.findViewById(R.id.nameTextView);
-        phoneTextView = (TextView) view.findViewById(R.id.phoneTextView);
-        emailTextView = (TextView) view.findViewById(R.id.emailTextView);
-        streetTextView = (TextView) view.findViewById(R.id.streetTextView);
+        titleTextView = (TextView) view.findViewById(R.id.titleTextView);
+        creationDateTextView = (TextView) view.findViewById(R.id.creationDateTextView);
+        mediumTextView = (TextView) view.findViewById(R.id.mediumTextView);
+        dimensionsTextView = (TextView) view.findViewById(R.id.dimensionsTextView);
         imageView = (ImageView) view.findViewById(R.id.imageView);
 
-        getLoaderManager().initLoader(CONTACT_LOADER, null, this);
+        getLoaderManager().initLoader(ARTWORK_LOADER, null, this);
         return view;
     }
 
@@ -85,18 +84,18 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
     public boolean onOptionsItemSelected(MenuItem item){
         switch(item.getItemId()){
             case R.id.action_edit:
-                listener.onEditContact(contactUri);
+                listener.onEditArtwork(artworkUri);
                 return true;
             case R.id.action_delete:
-                deleteContact();
+                deleteArtwork();
                 return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
-    public void deleteContact(){
-        getActivity().getContentResolver().delete(contactUri, null, null);
-        listener.onContactDeleted();
+    public void deleteArtwork(){
+        getActivity().getContentResolver().delete(artworkUri, null, null);
+        listener.onArtworkDeleted();
     }
 
 
@@ -105,8 +104,8 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
         CursorLoader cursorLoader;
 
         switch(id){
-            case CONTACT_LOADER:
-                cursorLoader = new CursorLoader(getActivity(), contactUri, null, null, null, null);
+            case ARTWORK_LOADER:
+                cursorLoader = new CursorLoader(getActivity(), artworkUri, null, null, null, null);
                 break;
                 default:
                     cursorLoader = null;
@@ -127,10 +126,10 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
             int dimensionsIndex = data.getColumnIndex(DatabaseDescription.Artwork.COLUMN_DIMENSIONS);
             int imageIndex = data.getColumnIndex(DatabaseDescription.Artwork.COLUMN_IMAGE);
 
-            nameTextView.setText(data.getString(titleIndex));
-            phoneTextView.setText(data.getString(dateCreatedIndex));
-            emailTextView.setText(data.getString(mediumIndex));
-            streetTextView.setText(data.getString(dimensionsIndex));
+            titleTextView.setText(data.getString(titleIndex));
+            creationDateTextView.setText(data.getString(dateCreatedIndex));
+            mediumTextView.setText(data.getString(mediumIndex));
+            dimensionsTextView.setText(data.getString(dimensionsIndex));
             imageView.setImageBitmap(ImageUtils.getImage(data.getBlob(imageIndex)));
 
         }

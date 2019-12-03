@@ -14,10 +14,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_columnSpan="2"
-            app:srcCompat="@android:drawable/alert_dark_frame" />
+            android:adjustViewBounds="true"
+            app:srcCompat="@android:drawable/alert_dark_frame"/>
         <TextView
-            android:id="@+id/nameLabelTextView"
-            style="@style/ContactLabelTextView"
+            android:id="@+id/titleLabelTextView"
+            style="@style/ArtworkLabelTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_row="1"
@@ -25,61 +26,61 @@
             android:text="@string/label_title" />
 
         <TextView
-            android:id="@+id/nameTextView"
-            style="@style/ContactTextView"
+            android:id="@+id/titleTextView"
+            style="@style/ArtworkTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_row="1"
             android:layout_column="1"/>
 
         <TextView
-            android:id="@+id/phoneLabelTextView"
+            android:id="@+id/creationDateLabelTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_row="2"
             android:layout_column="0"
-            style="@style/ContactLabelTextView"
+            style="@style/ArtworkLabelTextView"
             android:text="@string/label_date_created" />
 
         <TextView
-            android:id="@+id/phoneTextView"
+            android:id="@+id/creationDateTextView"
             android:layout_row="2"
             android:layout_column="1"
-            style="@style/ContactTextView"
+            style="@style/ArtworkTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <TextView
-            android:id="@+id/emailLabelTextView"
+            android:id="@+id/mediumLabelTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_row="3"
             android:layout_column="0"
-            style="@style/ContactLabelTextView"
+            style="@style/ArtworkLabelTextView"
             android:text="@string/label_medium" />
 
         <TextView
-            android:id="@+id/emailTextView"
+            android:id="@+id/mediumTextView"
             android:layout_row="3"
             android:layout_column="1"
-            style="@style/ContactTextView"
+            style="@style/ArtworkTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <TextView
-            android:id="@+id/streetLabelTextView"
+            android:id="@+id/dimensionsLabelTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_row="4"
             android:layout_column="0"
-            style="@style/ContactLabelTextView"
+            style="@style/ArtworkLabelTextView"
             android:text="@string/label_dimensions" />
 
         <TextView
-            android:id="@+id/streetTextView"
+            android:id="@+id/dimensionsTextView"
             android:layout_row="4"
             android:layout_column="1"
-            style="@style/ContactTextView"
+            style="@style/ArtworkTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 

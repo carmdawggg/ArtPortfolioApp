@@ -26,7 +26,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputLayout;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -38,21 +37,20 @@ public class AddEditFragment extends Fragment implements LoaderManager.LoaderCal
     private static final int SELECT_PICTURE = 100;
     private Uri selectedImageUri;
     public interface AddEditFragmentListener{
-        void onAddEditCompleted(Uri contactUri);
+        void onAddEditCompleted(Uri artworkUri);
     }
 
-    private static final int CONTACT_LOADER = 0;
+    private static final int ARTWORK_LOADER = 0;
     private AddEditFragmentListener listener;
-    private Uri contactUri;
-    private boolean addingNewContact = true;
+    private Uri artworkUri;
+    private boolean addingNewArtwork = true;
 
     private TextInputLayout titleTextInputLayout;
     private TextInputLayout dateCreatedTextInputLayout;
     private TextInputLayout mediumTextInputLayout;
     private TextInputLayout dimensionsTextInputLayout;
-    private TextInputLayout imageTextInputLayout;
     private ImageView imageView;
-    private FloatingActionButton saveContactFAB;
+    private FloatingActionButton saveArtworkFAB;
 
     private CoordinatorLayout coordinatorLayout;
 
@@ -74,14 +72,14 @@ public class AddEditFragment extends Fragment implements LoaderManager.LoaderCal
         setHasOptionsMenu(true);
 
         View view = inflater.inflate(R.layout.fragment_add_edit, container, false);
-        titleTextInputLayout = (TextInputLayout) view.findViewById(R.id.nameTextInputLayout);
+        titleTextInputLayout = (TextInputLayout) view.findViewById(R.id.titleTextInputLayout);
         titleTextInputLayout.getEditText().addTextChangedListener(titleChangedListener);
 
-        dateCreatedTextInputLayout = (TextInputLayout) view.findViewById(R.id.phoneTextInputLayout);
+        dateCreatedTextInputLayout = (TextInputLayout) view.findViewById(R.id.creationDateTextInputLayout);
         dateCreatedTextInputLayout.getEditText().addTextChangedListener(dateCreatedChangedListener);
-        mediumTextInputLayout = (TextInputLayout) view.findViewById(R.id.emailTextInputLayout);
+        mediumTextInputLayout = (TextInputLayout) view.findViewById(R.id.mediumTextInputLayout);
         mediumTextInputLayout.getEditText().addTextChangedListener(mediumChangedListener);
-        dimensionsTextInputLayout = (TextInputLayout) view.findViewById(R.id.streetTextInputLayout);
+        dimensionsTextInputLayout = (TextInputLayout) view.findViewById(R.id.dimensionsTextInputLayout);
         dimensionsTextInputLayout.getEditText().addTextChangedListener(dimensionsChangedListener);
 
         imageView = (ImageView) view.findViewById(R.id.image_add_edit);
@@ -92,9 +90,9 @@ public class AddEditFragment extends Fragment implements LoaderManager.LoaderCal
             }
         });
 
-        saveContactFAB = (FloatingActionButton) view.findViewById(R.id.saveFloatingActionButton);
+        saveArtworkFAB = (FloatingActionButton) view.findViewById(R.id.saveFloatingActionButton);
 
-        saveContactFAB.setOnClickListener(saveContactButtonClicked);
+        saveArtworkFAB.setOnClickListener(saveArtworkButtonClicked);
         updateSaveButtonFAB();
 
         coordinatorLayout = (CoordinatorLayout) getActivity().findViewById(R.id.coordinatorLayout);
@@ -102,12 +100,12 @@ public class AddEditFragment extends Fragment implements LoaderManager.LoaderCal
         Bundle arguments = getArguments();
 
         if(arguments !=null){
-            addingNewContact = false;
-            contactUri = arguments.getParcelable(MainActivity.CONTACT_URI);
+            addingNewArtwork = false;
+            artworkUri = arguments.getParcelable(MainActivity.ARTWORK_URI);
         }
 
-        if(contactUri != null){
-            getLoaderManager().initLoader(CONTACT_LOADER, null, this);
+        if(artworkUri != null){
+            getLoaderManager().initLoader(ARTWORK_LOADER, null, this);
         }
         return view;
 
@@ -209,47 +207,29 @@ public class AddEditFragment extends Fragment implements LoaderManager.LoaderCal
         }
     };
 
-    private final TextWatcher imageChangedListener = new TextWatcher() {
-        @Override
-        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-        }
-
-        @Override
-        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            updateSaveButtonFAB();
-
-        }
-
-        @Override
-        public void afterTextChanged(Editable editable) {
-
-        }
-    };
-
     private void updateSaveButtonFAB(){
         String input = titleTextInputLayout.getEditText().getText().toString();
 
         if(input.trim().length() != 0){
-            saveContactFAB.show();
+            saveArtworkFAB.show();
         }
         else{
-            saveContactFAB.hide();
+            saveArtworkFAB.hide();
         }
 
     }
 
-    private final View.OnClickListener saveContactButtonClicked = new View.OnClickListener() {
+    private final View.OnClickListener saveArtworkButtonClicked = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             ((InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(
                     getView().getWindowToken(), 0
             );
-            saveContact();
+            saveArtwork();
         }
     };
 
-    private void saveContact(){
+    private void saveArtwork(){
         ContentValues contentValues = new ContentValues();
 
         InputStream iStream = null;
@@ -274,12 +254,12 @@ public class AddEditFragment extends Fragment implements LoaderManager.LoaderCal
         contentValues.put(DatabaseDescription.Artwork.COLUMN_DIMENSIONS,
                 dimensionsTextInputLayout.getEditText().getText().toString());
 
-        if(addingNewContact){
-            Uri newContactUri = getActivity().getContentResolver().insert(DatabaseDescription.Artwork.CONTENT_URI, contentValues);
+        if(addingNewArtwork){
+            Uri newArtworkUri = getActivity().getContentResolver().insert(DatabaseDescription.Artwork.CONTENT_URI, contentValues);
 
-            if(newContactUri != null){
+            if(newArtworkUri != null){
                 Snackbar.make(coordinatorLayout, R.string.artwork_added, Snackbar.LENGTH_LONG).show();
-                listener.onAddEditCompleted(newContactUri);
+                listener.onAddEditCompleted(newArtworkUri);
             }
             else{
                 Snackbar.make(coordinatorLayout, R.string.artwork_not_added, Snackbar.LENGTH_LONG).show();
@@ -289,10 +269,10 @@ public class AddEditFragment extends Fragment implements LoaderManager.LoaderCal
         }
         else{
 
-            int updatedRows = getActivity().getContentResolver().update(contactUri, contentValues, null, null);
+            int updatedRows = getActivity().getContentResolver().update(artworkUri, contentValues, null, null);
 
             if(updatedRows > 0){
-                listener.onAddEditCompleted(contactUri);
+                listener.onAddEditCompleted(artworkUri);
                 Snackbar.make(coordinatorLayout, R.string.artwork_updated, Snackbar.LENGTH_LONG).show();
             }
             else{
@@ -307,8 +287,8 @@ public class AddEditFragment extends Fragment implements LoaderManager.LoaderCal
     public Loader<Cursor> onCreateLoader(int id, Bundle args){
 
         switch(id){
-            case CONTACT_LOADER:
-                return new CursorLoader(getActivity(), contactUri, null, null, null, null);
+            case ARTWORK_LOADER:
+                return new CursorLoader(getActivity(), artworkUri, null, null, null, null);
             default:
                 return null;
         }

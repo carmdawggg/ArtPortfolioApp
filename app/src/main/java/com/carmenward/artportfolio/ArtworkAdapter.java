@@ -17,8 +17,8 @@ import com.carmenward.artportfolio.data.DatabaseDescription;
 
 public class ArtworkAdapter extends RecyclerView.Adapter<ArtworkAdapter.ViewHolder> {
 
-    public interface ContactClickListener{
-        void onClick(Uri contactUri);
+    public interface ArtworkClickListener{
+        void onClick(Uri artworkUri);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -51,9 +51,9 @@ public class ArtworkAdapter extends RecyclerView.Adapter<ArtworkAdapter.ViewHold
 
     public static Cursor cursor = null;
 
-    private final ContactClickListener clickListener;
+    private final ArtworkClickListener clickListener;
 
-    public ArtworkAdapter(ContactClickListener clickListener){
+    public ArtworkAdapter(ArtworkClickListener clickListener){
         this.clickListener = clickListener;
     }
 

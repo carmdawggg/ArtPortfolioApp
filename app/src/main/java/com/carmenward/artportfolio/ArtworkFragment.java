@@ -20,14 +20,14 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class ArtworkFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
 
-    public interface ContactsFragmentListener{
-        void onContactSelected(Uri contactUri);
+    public interface ArtworksFragmentListener{
+        void onArtworkSelected(Uri artworkUri);
 
-        void onAddContact();
+        void onAddArtwork();
     }
 
-    private static final int CONTACTS_LOADER = 0;
-    private ContactsFragmentListener listener;
+    private static final int ARTWORKS_LOADER = 0;
+    private ArtworksFragmentListener listener;
     private ArtworkAdapter artworkAdapter;
 
     @Override
@@ -42,16 +42,14 @@ public class ArtworkFragment extends Fragment implements LoaderManager.LoaderCal
         recyclerView.setLayoutManager(
                 new GridLayoutManager(this.getContext(), 2));
 
-        artworkAdapter = new ArtworkAdapter(new ArtworkAdapter.ContactClickListener(){
+        artworkAdapter = new ArtworkAdapter(new ArtworkAdapter.ArtworkClickListener(){
             @Override
-            public void onClick(Uri contactUri){
-                listener.onContactSelected(contactUri);
+            public void onClick(Uri artworkUri){
+                listener.onArtworkSelected(artworkUri);
             }
         });
 
         recyclerView.setAdapter(artworkAdapter);
-
-        recyclerView.addItemDecoration(new ItemDivider(getContext()));
 
         recyclerView.setHasFixedSize(true);
 
@@ -60,7 +58,7 @@ public class ArtworkFragment extends Fragment implements LoaderManager.LoaderCal
           new View.OnClickListener(){
               @Override
               public void onClick(View view){
-                  listener.onAddContact();
+                  listener.onAddArtwork();
               }
           }
         );
@@ -72,7 +70,7 @@ public class ArtworkFragment extends Fragment implements LoaderManager.LoaderCal
     @Override
     public void onAttach(Context context){
         super.onAttach(context);
-        listener = (ContactsFragmentListener) context;
+        listener = (ArtworksFragmentListener) context;
     }
 
     @Override
@@ -84,18 +82,18 @@ public class ArtworkFragment extends Fragment implements LoaderManager.LoaderCal
     @Override
     public void onActivityCreated(Bundle savedInstanceState){
         super.onActivityCreated(savedInstanceState);
-        getLoaderManager().initLoader(CONTACTS_LOADER, null, this);
-        updateContactList();
+        getLoaderManager().initLoader(ARTWORKS_LOADER, null, this);
+        updateArtworkList();
     }
 
-    public void updateContactList(){
+    public void updateArtworkList(){
         artworkAdapter.notifyDataSetChanged();
     }
 
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args){
         switch(id){
-            case CONTACTS_LOADER:
+            case ARTWORKS_LOADER:
                 return new CursorLoader(getActivity(),
                         DatabaseDescription.Artwork.CONTENT_URI,
                         null, null, null, null);
@@ -107,13 +105,13 @@ public class ArtworkFragment extends Fragment implements LoaderManager.LoaderCal
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor data){
             artworkAdapter.swapCursor(data);
-            updateContactList();
+            updateArtworkList();
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> loader){
         artworkAdapter.swapCursor(null);
-        updateContactList();
+        updateArtworkList();
     }
 
 }
